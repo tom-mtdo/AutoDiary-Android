@@ -1,7 +1,9 @@
 package com.android.mtdo.autodiary.controllers;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -14,15 +16,15 @@ public class ServiceDiary extends Service {
     private Timer           timer;
     private final String    timerName="DiaryTimer";
 
+    private SensorManager   sensorManager;
+    private ControllerAccelerometer cAccelerometer;
+
     private TimerTask       timerTask = new TimerTask() {
         @Override
         public void run() {
             doService();
         }
     };
-
-    public ServiceDiary() {
-    }
 
     public void doService(){
         Log.i(TAG, "ServiceDiary is working");
@@ -40,6 +42,7 @@ public class ServiceDiary extends Service {
         Log.i(TAG, "Service starting...");
         timer = new Timer(timerName);
         timer.schedule(timerTask, 1000L, 30 * 1000L);
+        startAutoDiary();
         Log.i(TAG, "Service started");
     }
 
@@ -49,6 +52,19 @@ public class ServiceDiary extends Service {
         Log.i(TAG, "Service destroying...");
         timer.cancel();
         timer = null;
+        stopAutoDiary();
         Log.i(TAG, "Service destroyed");
+    }
+
+    private void stopAutoDiary() {
+        cAccelerometer.unregisterListener(sensorManager);
+    }
+
+    public void startAutoDiary(){
+
+        sensorManager  = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        cAccelerometer = new ControllerAccelerometer(sensorManager);
+        //  thread here
+        cAccelerometer.registerListener(sensorManager);
     }
 }

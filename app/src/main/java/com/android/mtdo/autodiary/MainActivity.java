@@ -18,12 +18,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void startDiaryService(View view){
+    public void startServiceDiary(View view){
         Log.i(TAG,"Start diary service");
         startService(new Intent(this, ServiceDiary.class));
     }
 
-    public void stopDiaryService(View view){
+    public void stopServiceDiary(View view){
         Log.i(TAG,"Stop diary service");
         stopService(new Intent(this, ServiceDiary.class));
     }
