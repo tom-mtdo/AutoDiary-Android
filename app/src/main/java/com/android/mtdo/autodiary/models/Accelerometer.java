@@ -3,7 +3,7 @@ package com.android.mtdo.autodiary.models;
 /**
  * Created by thangdo on 26/12/2015.
  */
-public class AccelerometerData {
+public class Accelerometer {
     // accelerometer data
     private double 	acceX			;
     private double 	acceY			;
@@ -17,7 +17,7 @@ public class AccelerometerData {
 
     @Override
     public String toString() {
-        return "AccelerometerData{" +
+        return "Accelerometer{" +
                 "acceX=" + acceX +
                 ", acceY=" + acceY +
                 ", acceZ=" + acceZ +

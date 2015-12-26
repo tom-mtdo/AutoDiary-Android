@@ -65,6 +65,7 @@ public class ServiceDiary extends Service {
         sensorManager  = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         cAccelerometer = new ControllerAccelerometer(sensorManager);
         //  thread here
+        // thread safe for db access
         cAccelerometer.registerListener(sensorManager);
     }
 }

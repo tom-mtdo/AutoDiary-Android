@@ -6,7 +6,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-import com.android.mtdo.autodiary.models.AccelerometerData;
+import com.android.mtdo.autodiary.models.Accelerometer;
 
 /**
  * Created by thangdo on 26/12/2015.
@@ -17,7 +17,7 @@ import com.android.mtdo.autodiary.models.AccelerometerData;
 public class ControllerAccelerometer implements SensorEventListener{
     private final String TAG = this.getClass().getName();
     private final Sensor mAcce;
-    private AccelerometerData mData;
+    private Accelerometer mData;
 
     public ControllerAccelerometer(SensorManager sensorManager) {
         mAcce = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -33,10 +33,12 @@ public class ControllerAccelerometer implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        mData = new AccelerometerData();
-        mData.setAcceX(0.1);
-        mData.setAcceY(0.2);
-        mData.setAcceZ(0.3);
+        mData = new Accelerometer();
+        mData.setAcceX(event.values[0]);
+        mData.setAcceY(event.values[1]);
+        mData.setAcceZ(event.values[2]);
+        mData.setSensorTimeStamp(event.timestamp);
+        mData.setCpuTimeStamp(System.currentTimeMillis());
 
         storeData();
     }
