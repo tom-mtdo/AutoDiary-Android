@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/ui_btnStart_label"
         android:id="@+id/btnStart"
-        android:onClick="startDiaryService"/>
+        android:onClick="startServiceDiary"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -30,6 +30,6 @@
         android:layout_height="wrap_content"
         android:text="@string/ui_btnStop_label"
         android:id="@+id/btnStop"
-        android:onClick="stopDiaryService"/>
+        android:onClick="stopServiceDiary"/>
 
 </LinearLayout>

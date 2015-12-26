@@ -8,7 +8,7 @@ import android.util.Log;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class DiaryService extends Service {
+public class ServiceDiary extends Service {
 
     private final String    TAG = this.getClass().getName();
     private Timer           timer;
@@ -21,11 +21,11 @@ public class DiaryService extends Service {
         }
     };
 
-    public DiaryService() {
+    public ServiceDiary() {
     }
 
     public void doService(){
-        Log.i(TAG, "DiaryService is working");
+        Log.i(TAG, "ServiceDiary is working");
     }
 
     @Override

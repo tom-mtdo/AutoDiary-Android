@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".controllers.DiaryService"
+            android:name=".controllers.ServiceDiary"
             android:enabled="true"
             android:exported="true"
             android:process=":remote">

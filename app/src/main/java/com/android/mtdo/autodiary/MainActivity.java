@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.android.mtdo.autodiary.controllers.DiaryService;
+import com.android.mtdo.autodiary.controllers.ServiceDiary;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void startDiaryService(View view){
         Log.i(TAG,"Start diary service");
-        startService(new Intent(this, DiaryService.class));
+        startService(new Intent(this, ServiceDiary.class));
     }
 
     public void stopDiaryService(View view){
         Log.i(TAG,"Stop diary service");
-        stopService(new Intent(this, DiaryService.class));
+        stopService(new Intent(this, ServiceDiary.class));
     }
 }

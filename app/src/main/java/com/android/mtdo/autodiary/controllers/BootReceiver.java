@@ -14,6 +14,6 @@ public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i(TAG, "Start diary service");
-        context.startService(new Intent(context, DiaryService.class));
+        context.startService(new Intent(context, ServiceDiary.class));
     }
 }
