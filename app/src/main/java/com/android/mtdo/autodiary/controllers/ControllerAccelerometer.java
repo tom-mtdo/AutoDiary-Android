@@ -17,14 +17,23 @@ import com.android.mtdo.autodiary.models.Accelerometer;
 public class ControllerAccelerometer implements SensorEventListener{
     private final String TAG = this.getClass().getName();
     private final Sensor mAcce;
-    private Accelerometer mData;
+    private Accelerometer mData = new Accelerometer();
+    private SensorEvent sensorEvent;
+
+    private Runnable dataProcessor = new Runnable(){
+        @Override
+        public void run() {
+            storeData();
+        }
+    };
+
 
     public ControllerAccelerometer(SensorManager sensorManager) {
         mAcce = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
     public void registerListener(SensorManager sensorManager){
-        sensorManager.registerListener(this,mAcce,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, mAcce, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     public void unregisterListener(SensorManager sensorManager){
@@ -33,17 +42,18 @@ public class ControllerAccelerometer implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        mData = new Accelerometer();
-        mData.setAcceX(event.values[0]);
-        mData.setAcceY(event.values[1]);
-        mData.setAcceZ(event.values[2]);
-        mData.setSensorTimeStamp(event.timestamp);
-        mData.setCpuTimeStamp(System.currentTimeMillis());
-
-        storeData();
+        sensorEvent = event;
+        dataProcessor.run();
     }
 
     public void storeData(){
+        // thread here
+        mData.setAcceX(sensorEvent.values[0]);
+        mData.setAcceY(sensorEvent.values[1]);
+        mData.setAcceZ(sensorEvent.values[2]);
+        mData.setSensorTimeStamp(sensorEvent.timestamp);
+        mData.setCpuTimeStamp(System.currentTimeMillis());
+
         Log.i(TAG,"Data: " + mData.toString());
     }
 
