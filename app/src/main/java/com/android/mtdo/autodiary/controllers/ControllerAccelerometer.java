@@ -15,18 +15,39 @@ import com.android.mtdo.autodiary.models.Accelerometer;
  *
  */
 public class ControllerAccelerometer implements SensorEventListener{
-    private final String TAG = this.getClass().getName();
-    private final Sensor mAcce;
-    private Accelerometer mData = new Accelerometer();
-    private SensorEvent sensorEvent;
+    private final String    TAG = this.getClass().getName();
+    private final Sensor    mAcce;
+    private Accelerometer   mData = new Accelerometer();
+    private SensorEvent     sensorEvent;
+    private Thread          mCurrentThread;
 
     private Runnable dataProcessor = new Runnable(){
         @Override
         public void run() {
+            // Moves the current Thread into the background
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
             storeData();
+            Log.i(TAG, "Data: " + mData.toString());
+
+            processData();
+            // Thread.currentThread();
         }
     };
 
+    public void processData() {
+        Log.i(TAG,"Data processed");
+    }
+
+    public void storeData(){
+        mData.setAcceX(sensorEvent.values[0]);
+        mData.setAcceY(sensorEvent.values[1]);
+        mData.setAcceZ(sensorEvent.values[2]);
+        mData.setSensorTimeStamp(sensorEvent.timestamp);
+        mData.setCpuTimeStamp(System.currentTimeMillis());
+
+        Log.i(TAG,"Data stored");
+    }
 
     public ControllerAccelerometer(SensorManager sensorManager) {
         mAcce = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -46,20 +67,16 @@ public class ControllerAccelerometer implements SensorEventListener{
         dataProcessor.run();
     }
 
-    public void storeData(){
-        // thread here
-        mData.setAcceX(sensorEvent.values[0]);
-        mData.setAcceY(sensorEvent.values[1]);
-        mData.setAcceZ(sensorEvent.values[2]);
-        mData.setSensorTimeStamp(sensorEvent.timestamp);
-        mData.setCpuTimeStamp(System.currentTimeMillis());
-
-        Log.i(TAG,"Data: " + mData.toString());
-    }
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 
+    public Thread getmCurrentThread() {
+        return mCurrentThread;
+    }
+
+    public void setmCurrentThread(Thread mCurrentThread) {
+        this.mCurrentThread = mCurrentThread;
+    }
 }

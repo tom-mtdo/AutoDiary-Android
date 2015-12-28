@@ -61,7 +61,6 @@ public class ServiceDiary extends Service {
     }
 
     public void startAutoDiary(){
-
         sensorManager  = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         cAccelerometer = new ControllerAccelerometer(sensorManager);
         cAccelerometer.registerListener(sensorManager);
